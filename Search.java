@@ -1,14 +1,15 @@
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException; 
-
-public class Search{
+ 
+public class Search extends Thread{
 
   String[] listaLinea;
-  
-  public int buscador(String archName){
+  long timer;
+  public void run(){
     try {
-      File palabras = new File(archName);
+      timer = System.currentTimeMillis();
+      File palabras = new File("palabras.txt");
       Scanner lector = new Scanner(palabras);
       while (lector.hasNextLine()) {
         String linea = lector.nextLine();
@@ -17,7 +18,10 @@ public class Search{
           if(listaLinea[i].equals("eiffel")){
             System.out.println(listaLinea[i]);
             lector.close();
-            return(1);
+            timer = System.currentTimeMillis()-timer;
+            System.out.println("Tiempo empleado: "+timer);
+            System.out.println("---------------------------------");
+            return;
           }
         }
       }
@@ -27,10 +31,7 @@ public class Search{
       System.out.println("No se encontro archivo");
       e.printStackTrace();
     }
-    return(0);
+    return;
   }
-  public static void main(String[] args){
-      Search buscador=new Search();
-      buscador.buscador("palabras.txt");
-  }     
+     
 }
